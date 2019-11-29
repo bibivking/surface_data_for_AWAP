@@ -131,8 +131,12 @@ fout->$nml_1D(9)$ = lat
 
 ; _______________________ nml_2D __________________________
 do var_num = 0,32
-   print(nml_2D(var_num))
-   var   = new((/681,841/),  float)
+   print(nml_2D(var_num)) 
+   if var_num .le. 1 then
+      var   = new((/681,841/),  integer)
+   else
+      var   = new((/681,841/),  float)
+   end if
    var!0   = "latitude"
    var!1   = "longitude"
    var&latitude  = lat*1.0
@@ -145,7 +149,7 @@ do var_num = 0,32
    filevardef(fout, nml_2D(var_num),typeof(fcp->$nml_2D(var_num)$),getvardims(var))
    print(getvardims(var))
    filevarattdef(fout,nml_2D(var_num),fcp->$nml_2D(var_num)$)
-   fout->$nml_2D(var_num)$ = var*1.0
+   fout->$nml_2D(var_num)$ = var*1
    delete(var)
 end do
 
